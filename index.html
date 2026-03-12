@@ -1,0 +1,979 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Terminal & AI Glossary | Stas Pavlov</title>
+<meta name="description" content="150+ practical terms for non-developers working with Claude Code, AI agents, and modern developer tools.">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0B1C12;
+    --bg-light: #0f2518;
+    --bg-card: rgba(255,255,255,0.04);
+    --bg-card-hover: rgba(255,255,255,0.07);
+    --bg-glass: rgba(220,228,230,0.06);
+    --orange: #FC7F00;
+    --orange-hover: #ff9a2e;
+    --orange-glow: rgba(252,127,0,0.15);
+    --green-accent: #2d6b3f;
+    --green-light: #3a8a52;
+    --blue: #5B8DEF;
+    --red: #E85D5D;
+    --white: #F8F9FB;
+    --text: #DCE4E6;
+    --text-muted: #69727D;
+    --border: rgba(255,255,255,0.08);
+    --border-active: rgba(252,127,0,0.4);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Manrope', sans-serif;
+    min-height: 100vh;
+    font-size: 16px;
+    line-height: 1.6;
+  }
+
+  /* === NAVBAR === */
+  .navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 40px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(11,28,18,0.9);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .logo {
+    font-size: 24px;
+    font-weight: 800;
+    color: var(--white);
+    letter-spacing: -1px;
+    text-decoration: none;
+  }
+
+  .logo span { color: var(--orange); }
+
+  .nav-meta {
+    font-size: 13px;
+    color: var(--text-muted);
+    font-weight: 500;
+  }
+
+  .nav-meta strong {
+    color: var(--orange);
+  }
+
+  /* === HERO === */
+  .hero {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 80px 40px 48px;
+    text-align: center;
+  }
+
+  .hero-badge {
+    display: inline-block;
+    background: var(--orange-glow);
+    color: var(--orange);
+    font-size: 13px;
+    font-weight: 700;
+    padding: 6px 16px;
+    border-radius: 100px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    margin-bottom: 24px;
+    border: 1px solid rgba(252,127,0,0.2);
+  }
+
+  .hero h1 {
+    font-size: clamp(32px, 5vw, 52px);
+    font-weight: 800;
+    color: var(--white);
+    letter-spacing: -2px;
+    line-height: 1.1;
+    margin-bottom: 16px;
+  }
+
+  .hero h1 em {
+    font-style: normal;
+    color: var(--orange);
+  }
+
+  .hero p {
+    font-size: 18px;
+    color: var(--text-muted);
+    max-width: 600px;
+    margin: 0 auto 40px;
+    line-height: 1.7;
+  }
+
+  /* === SEARCH === */
+  .search-container {
+    max-width: 640px;
+    margin: 0 auto 24px;
+    position: relative;
+  }
+
+  .search-input {
+    width: 100%;
+    padding: 16px 24px 16px 52px;
+    background: var(--bg-light);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    color: var(--white);
+    font-family: 'Manrope', sans-serif;
+    font-size: 16px;
+    font-weight: 500;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+
+  .search-input:focus {
+    border-color: var(--border-active);
+    box-shadow: 0 0 0 4px var(--orange-glow);
+  }
+
+  .search-input::placeholder {
+    color: var(--text-muted);
+  }
+
+  .search-icon {
+    position: absolute;
+    left: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-muted);
+    pointer-events: none;
+  }
+
+  .search-count {
+    text-align: center;
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-bottom: 32px;
+    font-weight: 500;
+    min-height: 20px;
+  }
+
+  /* === CATEGORY CHIPS === */
+  .category-chips {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+    max-width: 900px;
+    margin: 0 auto 56px;
+    padding: 0 40px;
+  }
+
+  .chip {
+    padding: 8px 16px;
+    border-radius: 100px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    border: 1px solid var(--border);
+    background: var(--bg-card);
+    color: var(--text-muted);
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+
+  .chip:hover {
+    background: var(--bg-card-hover);
+    color: var(--text);
+    border-color: rgba(255,255,255,0.15);
+  }
+
+  .chip.active {
+    background: var(--orange-glow);
+    color: var(--orange);
+    border-color: rgba(252,127,0,0.3);
+  }
+
+  /* === CONTENT === */
+  .content {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 40px 100px;
+  }
+
+  /* === CATEGORY SECTION === */
+  .category {
+    margin-bottom: 56px;
+  }
+
+  .category-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 24px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .category-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    flex-shrink: 0;
+  }
+
+  .category-title {
+    font-size: 22px;
+    font-weight: 800;
+    color: var(--white);
+    letter-spacing: -0.5px;
+  }
+
+  .category-count {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--text-muted);
+    background: var(--bg-card);
+    padding: 4px 10px;
+    border-radius: 100px;
+    margin-left: auto;
+  }
+
+  /* === TERM CARDS === */
+  .term-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px 24px;
+    margin-bottom: 8px;
+    transition: all 0.2s;
+    cursor: default;
+  }
+
+  .term-card:hover {
+    background: var(--bg-card-hover);
+    border-color: rgba(255,255,255,0.12);
+  }
+
+  .term-card.highlight {
+    border-color: var(--border-active);
+    background: rgba(252,127,0,0.04);
+  }
+
+  .term-name {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--orange);
+    margin-bottom: 6px;
+    letter-spacing: -0.3px;
+  }
+
+  .term-def {
+    font-size: 15px;
+    color: var(--text);
+    line-height: 1.65;
+  }
+
+  .term-def code {
+    background: rgba(255,255,255,0.08);
+    padding: 2px 7px;
+    border-radius: 5px;
+    font-size: 13px;
+    font-family: 'SF Mono', 'Fira Code', 'Cascadia Code', monospace;
+    color: var(--orange-hover);
+  }
+
+  /* === SYMBOLS TABLE === */
+  .symbols-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 4px;
+  }
+
+  .symbols-table th {
+    text-align: left;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 8px 16px 12px;
+  }
+
+  .symbols-table td {
+    background: var(--bg-card);
+    padding: 12px 16px;
+    font-size: 14px;
+  }
+
+  .symbols-table tr td:first-child {
+    border-radius: 8px 0 0 8px;
+    font-family: 'SF Mono', 'Fira Code', monospace;
+    color: var(--orange);
+    font-weight: 700;
+    font-size: 16px;
+    width: 60px;
+    text-align: center;
+  }
+
+  .symbols-table tr td:nth-child(2) {
+    font-weight: 600;
+    color: var(--white);
+    width: 160px;
+  }
+
+  .symbols-table tr td:last-child {
+    border-radius: 0 8px 8px 0;
+    color: var(--text);
+  }
+
+  /* === FOOTER === */
+  .footer {
+    text-align: center;
+    padding: 40px;
+    border-top: 1px solid var(--border);
+    color: var(--text-muted);
+    font-size: 14px;
+  }
+
+  .footer a {
+    color: var(--orange);
+    text-decoration: none;
+    font-weight: 600;
+  }
+
+  .footer a:hover {
+    color: var(--orange-hover);
+  }
+
+  /* === NO RESULTS === */
+  .no-results {
+    text-align: center;
+    padding: 60px 20px;
+    color: var(--text-muted);
+    display: none;
+  }
+
+  .no-results .emoji {
+    font-size: 48px;
+    margin-bottom: 16px;
+  }
+
+  .no-results p {
+    font-size: 16px;
+  }
+
+  /* === BACK TO TOP === */
+  .back-to-top {
+    position: fixed;
+    bottom: 32px;
+    right: 32px;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: var(--orange);
+    color: var(--bg);
+    border: none;
+    cursor: pointer;
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.3s;
+    box-shadow: 0 4px 24px rgba(252,127,0,0.3);
+    z-index: 50;
+  }
+
+  .back-to-top.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .back-to-top:hover {
+    background: var(--orange-hover);
+    transform: translateY(-2px);
+  }
+
+  /* === CATEGORY COLORS === */
+  .cat-shell .category-icon { background: rgba(91,141,239,0.15); }
+  .cat-tools .category-icon { background: rgba(91,141,239,0.15); }
+  .cat-infra .category-icon { background: rgba(58,138,82,0.15); }
+  .cat-git .category-icon { background: rgba(252,127,0,0.15); }
+  .cat-pkg .category-icon { background: rgba(232,93,93,0.15); }
+  .cat-ai .category-icon { background: rgba(252,127,0,0.15); }
+  .cat-cli .category-icon { background: rgba(91,141,239,0.15); }
+  .cat-devops .category-icon { background: rgba(58,138,82,0.15); }
+  .cat-net .category-icon { background: rgba(232,93,93,0.15); }
+  .cat-community .category-icon { background: rgba(252,127,0,0.15); }
+
+  /* === RESPONSIVE === */
+  @media (max-width: 768px) {
+    .navbar { padding: 16px 20px; }
+    .hero { padding: 48px 20px 32px; }
+    .hero p { font-size: 16px; }
+    .search-container { margin: 0 20px 24px; }
+    .category-chips { padding: 0 20px; margin-bottom: 40px; }
+    .content { padding: 0 20px 80px; }
+    .term-card { padding: 16px 18px; }
+    .category-title { font-size: 18px; }
+    .symbols-table td:nth-child(2) { width: auto; }
+    .nav-meta { display: none; }
+  }
+
+  @media (max-width: 480px) {
+    .hero h1 { font-size: 28px; letter-spacing: -1px; }
+    .chip { font-size: 12px; padding: 6px 12px; }
+  }
+
+  /* === SMOOTH SCROLL === */
+  html { scroll-behavior: smooth; }
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+  <a href="#" class="logo"><span>ai</span>cademy</a>
+  <div class="nav-meta"><strong>150+</strong> terms &middot; Stas Pavlov</div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-badge">Reference Guide</div>
+  <h1>Terminal & <em>AI</em> Glossary</h1>
+  <p>A practical reference for non-developers working with Claude Code, AI agents, and modern developer tools. Plain language. No jargon chains.</p>
+
+  <!-- SEARCH -->
+  <div class="search-container">
+    <svg class="search-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+    <input type="text" class="search-input" id="searchInput" placeholder="Search terms... (e.g. MCP, Docker, branch)" autocomplete="off">
+  </div>
+  <div class="search-count" id="searchCount"></div>
+</section>
+
+<!-- CATEGORY CHIPS -->
+<div class="category-chips" id="categoryChips">
+  <button class="chip active" data-category="all">All</button>
+  <button class="chip" data-category="shell">Shell & Terminal</button>
+  <button class="chip" data-category="tools">Terminal Tools</button>
+  <button class="chip" data-category="infra">Infrastructure</button>
+  <button class="chip" data-category="git">Git & Version Control</button>
+  <button class="chip" data-category="pkg">Package Management</button>
+  <button class="chip" data-category="ai">AI / LLM</button>
+  <button class="chip" data-category="cli">CLI Commands</button>
+  <button class="chip" data-category="devops">DevOps</button>
+  <button class="chip" data-category="net">Networking & Security</button>
+  <button class="chip" data-category="community">Gen AI Circle</button>
+</div>
+
+<!-- CONTENT -->
+<main class="content" id="glossaryContent">
+
+<!-- 1. Shell & Terminal Basics -->
+<section class="category cat-shell" data-category="shell" id="cat-shell">
+  <div class="category-header">
+    <div class="category-icon">&#x1F4BB;</div>
+    <h2 class="category-title">Shell & Terminal Basics</h2>
+    <span class="category-count"></span>
+  </div>
+  <div class="term-list">
+    <div class="term-card"><div class="term-name">Terminal</div><div class="term-def">The application window where you type commands. Think of it as the screen and keyboard for talking directly to your computer. Examples: iTerm2, Ghostty, Warp, WezTerm.</div></div>
+    <div class="term-card"><div class="term-name">Shell</div><div class="term-def">The program running <em>inside</em> the terminal that interprets your commands. The terminal is the window; the shell is the brain behind it. Bash and Zsh are the two most common shells.</div></div>
+    <div class="term-card"><div class="term-name">Bash</div><div class="term-def">"Bourne Again SHell" &mdash; the default shell on most Linux systems and older Macs. The most widely documented shell. If you open a terminal on most servers, you&rsquo;re using Bash.</div></div>
+    <div class="term-card"><div class="term-name">Zsh</div><div class="term-def">"Z Shell" &mdash; the default shell on modern macOS. Works like Bash but with better auto-completion, customization, and convenience features.</div></div>
+    <div class="term-card"><div class="term-name">CLI</div><div class="term-def">Command Line Interface. Any tool you interact with by typing text commands rather than clicking buttons. Claude Code is a CLI tool.</div></div>
+    <div class="term-card"><div class="term-name">GUI</div><div class="term-def">Graphical User Interface. The point-and-click alternative to CLI. VS Code is a GUI; the terminal is a CLI.</div></div>
+    <div class="term-card"><div class="term-name">Console</div><div class="term-def">Often used interchangeably with "terminal." Technically the physical screen + keyboard, but in practice people mean the same thing.</div></div>
+    <div class="term-card"><div class="term-name">TTY</div><div class="term-def">"Teletypewriter" &mdash; a historical term for terminal connections. You might see it in error messages. It basically means "a terminal session."</div></div>
+    <div class="term-card"><div class="term-name">Prompt</div><div class="term-def">The blinking cursor area in your terminal where you type commands (e.g., <code>user@server:~$</code>). Not to be confused with an AI prompt.</div></div>
+    <div class="term-card"><div class="term-name">Command</div><div class="term-def">A single text instruction you type in the terminal, like <code>ls</code> (list files) or <code>cd</code> (change directory).</div></div>
+    <div class="term-card"><div class="term-name">Flag / Option</div><div class="term-def">A modifier added to a command with a dash. In <code>git commit -m "message"</code>, the <code>-m</code> is a flag that says "here comes my message."</div></div>
+    <div class="term-card"><div class="term-name">Argument</div><div class="term-def">The value you pass to a command. In <code>cd Documents</code>, "Documents" is the argument.</div></div>
+    <div class="term-card"><div class="term-name">Script</div><div class="term-def">A text file containing a sequence of commands that run automatically, like a recipe for the shell. Usually ends in <code>.sh</code>.</div></div>
+    <div class="term-card"><div class="term-name">REPL</div><div class="term-def">"Read-Eval-Print Loop" &mdash; an interactive environment where you type a command, it runs immediately, and you see the result. Python's interactive shell is a REPL.</div></div>
+    <div class="term-card"><div class="term-name">Stdin / Stdout / Stderr</div><div class="term-def">The three channels every command uses: stdin for receiving input, stdout for normal output, stderr for error messages. You usually see stdout and stderr in your terminal, but they can be separated.</div></div>
+    <div class="term-card"><div class="term-name">Exit Code</div><div class="term-def">A number a command returns when it finishes. <code>0</code> means success, anything else means something went wrong. Scripts use these to know if a step worked.</div></div>
+    <div class="term-card"><div class="term-name">Tab Completion</div><div class="term-def">Pressing the Tab key to auto-complete file names, commands, or options. Saves typing and prevents typos.</div></div>
+    <div class="term-card"><div class="term-name">Man Page</div><div class="term-def">The built-in manual for a command. Type <code>man git</code> to read git's manual. Press <code>q</code> to quit.</div></div>
+    <div class="term-card"><div class="term-name">Alias</div><div class="term-def">A shortcut you create for a longer command. Example: <code>alias gs="git status"</code> so you only type <code>gs</code>.</div></div>
+  </div>
+</section>
+
+<!-- 2. Terminal Tools & Multiplexers -->
+<section class="category cat-tools" data-category="tools" id="cat-tools">
+  <div class="category-header">
+    <div class="category-icon">&#x1F527;</div>
+    <h2 class="category-title">Terminal Tools & Multiplexers</h2>
+    <span class="category-count"></span>
+  </div>
+  <div class="term-list">
+    <div class="term-card"><div class="term-name">tmux</div><div class="term-def">Terminal MUltipleXer. Lets you split your terminal into multiple panes, keep sessions alive when you disconnect, and run multiple things at once. Essential for VPS work.</div></div>
+    <div class="term-card"><div class="term-name">Zellij</div><div class="term-def">A modern alternative to tmux with a friendlier interface. Easier to learn but less compatible with tools like claude-squad.</div></div>
+    <div class="term-card"><div class="term-name">Warp</div><div class="term-def">A modern terminal with built-in AI features. Beginner-friendly but requires account creation.</div></div>
+    <div class="term-card"><div class="term-name">Ghostty</div><div class="term-def">A fast, GPU-accelerated terminal by HashiCorp's founder. Recommended as the best Mac terminal in 2026.</div></div>
+    <div class="term-card"><div class="term-name">WezTerm</div><div class="term-def">Cross-platform terminal emulator. A solid choice for Windows users who want a modern terminal experience.</div></div>
+    <div class="term-card"><div class="term-name">Session</div><div class="term-def">A tmux/terminal session that persists even when you close the window or disconnect. You can "attach" back to it later &mdash; perfect for long-running tasks on a VPS.</div></div>
+    <div class="term-card"><div class="term-name">Pane</div><div class="term-def">A subdivision of a terminal window. In tmux, you can split one window into multiple panes, each running different commands side by side.</div></div>
+    <div class="term-card"><div class="term-name">Split</div><div class="term-def">Dividing your terminal into two or more visible areas. Horizontal split = top/bottom. Vertical split = left/right.</div></div>
+  </div>
+</section>
+
+<!-- 3. Infrastructure & Hosting -->
+<section class="category cat-infra" data-category="infra" id="cat-infra">
+  <div class="category-header">
+    <div class="category-icon">&#x2601;</div>
+    <h2 class="category-title">Infrastructure & Hosting</h2>
+    <span class="category-count"></span>
+  </div>
+  <div class="term-list">
+    <div class="term-card"><div class="term-name">VPS</div><div class="term-def">Virtual Private Server. A remote computer you rent to run your tools 24/7. Providers like DigitalOcean and Hetzner offer them from ~$18/month.</div></div>
+    <div class="term-card"><div class="term-name">SSH</div><div class="term-def">Secure Shell. The encrypted protocol to remotely connect to another computer's terminal over the internet. <code>ssh user@server-ip</code> connects you.</div></div>
+    <div class="term-card"><div class="term-name">SSH Key</div><div class="term-def">A pair of cryptographic files (public + private) used instead of a password to log into servers. More secure and convenient than typing passwords.</div></div>
+    <div class="term-card"><div class="term-name">Server</div><div class="term-def">A computer that runs continuously, usually without a screen. Can be a VPS in the cloud or an old machine at home.</div></div>
+    <div class="term-card"><div class="term-name">Cloud</div><div class="term-def">Someone else's servers that you rent on demand. AWS, Google Cloud, Azure, DigitalOcean, Hetzner are cloud providers.</div></div>
+    <div class="term-card"><div class="term-name">Docker</div><div class="term-def">A tool that packages software into isolated "containers" so it runs the same everywhere. Think of it as a lightweight virtual computer inside your computer.</div></div>
+    <div class="term-card"><div class="term-name">Container</div><div class="term-def">A lightweight, isolated environment created by Docker. Runs a program in a sandbox so it cannot access the rest of your computer. Running Claude Code in a container = safer.</div></div>
+    <div class="term-card"><div class="term-name">Docker Compose</div><div class="term-def">A tool to define and run multiple Docker containers together using a single <code>docker-compose.yml</code> config file.</div></div>
+    <div class="term-card"><div class="term-name">Image</div><div class="term-def">A snapshot/template from which Docker containers are created. You download an image once, then run as many containers from it as you need.</div></div>
+    <div class="term-card"><div class="term-name">Port</div><div class="term-def">A numbered "door" on a computer where a specific service listens. Port 80 = web traffic, port 22 = SSH, port 3000 = often a dev server.</div></div>
+    <div class="term-card"><div class="term-name">Localhost</div><div class="term-def">Your own computer, accessed via <code>127.0.0.1</code> or the name <code>localhost</code>. When a tool says it's running on localhost:3000, it means "on this machine, port 3000."</div></div>
+    <div class="term-card"><div class="term-name">Domain</div><div class="term-def">The human-readable address of a website (e.g., <code>prowareness.academy</code>). A DNS server translates it to a numeric IP address.</div></div>
+    <div class="term-card"><div class="term-name">DNS</div><div class="term-def">Domain Name System. The internet's phone book &mdash; translates domain names like <code>google.com</code> into IP addresses.</div></div>
+    <div class="term-card"><div class="term-name">IP Address</div><div class="term-def">A numeric address identifying a computer on a network (e.g., <code>192.168.1.1</code>). Every VPS has one.</div></div>
+    <div class="term-card"><div class="term-name">Firewall</div><div class="term-def">Software that controls which connections are allowed in and out of a server. Essential security for any VPS.</div></div>
+    <div class="term-card"><div class="term-name">Reverse Proxy</div><div class="term-def">A server (like Nginx or Caddy) that sits in front of your application and forwards requests to it. Handles SSL, load balancing, and routing.</div></div>
+    <div class="term-card"><div class="term-name">Nginx</div><div class="term-def">A popular web server and reverse proxy. Often used to put a public-facing HTTPS layer in front of applications running on a VPS.</div></div>
+    <div class="term-card"><div class="term-name">NAS</div><div class="term-def">Network Attached Storage. A dedicated box (like Synology) for storing files on your home network.</div></div>
+    <div class="term-card"><div class="term-name">Tailscale</div><div class="term-def">A zero-config VPN that connects your devices securely. Used for accessing Claude Code from your phone without exposing it to the internet.</div></div>
+    <div class="term-card"><div class="term-name">Systemd</div><div class="term-def">The system manager on most Linux servers. Controls which services start on boot and keeps them running. Interact with it via <code>systemctl</code>.</div></div>
+    <div class="term-card"><div class="term-name">Daemon</div><div class="term-def">A background process that runs continuously on a server. Your web server, database, and WhatsApp bridge are all daemons.</div></div>
+    <div class="term-card"><div class="term-name">SCP</div><div class="term-def">Secure Copy. Transfer files between your computer and a remote server over SSH. <code>scp file.txt user@server:/path/</code></div></div>
+    <div class="term-card"><div class="term-name">UPS</div><div class="term-def">Uninterruptible Power Supply. A battery backup for home servers so they power down gracefully during power outages.</div></div>
+  </div>
+</section>
+
+<!-- 4. Git & Version Control -->
+<section class="category cat-git" data-category="git" id="cat-git">
+  <div class="category-header">
+    <div class="category-icon">&#x1F500;</div>
+    <h2 class="category-title">Git & Version Control</h2>
+    <span class="category-count"></span>
+  </div>
+  <div class="term-list">
+    <div class="term-card"><div class="term-name">Git</div><div class="term-def">The most widely used version control system. Tracks every change you make to files, so you can go back in time. Like an infinite undo history that also lets multiple people collaborate.</div></div>
+    <div class="term-card"><div class="term-name">Repository (repo)</div><div class="term-def">A project folder tracked by Git. Contains your files plus the full history of every change. Your Second Brain lives in a repo.</div></div>
+    <div class="term-card"><div class="term-name">Clone</div><div class="term-def">Downloading a copy of a repository from GitHub to your local machine for the first time.</div></div>
+    <div class="term-card"><div class="term-name">Commit</div><div class="term-def">A saved snapshot of your changes with a description of what you did. Like a checkpoint in a video game.</div></div>
+    <div class="term-card"><div class="term-name">Stage (git add)</div><div class="term-def">Marking specific changed files to be included in your next commit. You stage files, then commit them.</div></div>
+    <div class="term-card"><div class="term-name">Push</div><div class="term-def">Uploading your local commits to a remote repository (like GitHub) so others can see them.</div></div>
+    <div class="term-card"><div class="term-name">Pull</div><div class="term-def">Downloading the latest changes from a remote repository to your local machine.</div></div>
+    <div class="term-card"><div class="term-name">Branch</div><div class="term-def">A parallel version of your code. You create a branch to try something without affecting the main version. Like making a copy of a document to experiment on.</div></div>
+    <div class="term-card"><div class="term-name">Main / Master</div><div class="term-def">The primary branch of your repository. <code>main</code> is the modern convention; <code>master</code> is the older term.</div></div>
+    <div class="term-card"><div class="term-name">Merge</div><div class="term-def">Combining changes from one branch back into another. When your experiment works, you merge it into main.</div></div>
+    <div class="term-card"><div class="term-name">Pull Request (PR)</div><div class="term-def">A proposal to merge changes from one branch into another. Others can review your changes, comment, and approve. GitLab calls it "Merge Request."</div></div>
+    <div class="term-card"><div class="term-name">Conflict</div><div class="term-def">When Git cannot automatically combine changes because two people edited the same lines. You need to manually choose which version to keep.</div></div>
+    <div class="term-card"><div class="term-name">Diff</div><div class="term-def">A comparison showing exactly what changed between two versions of a file. Added lines show in green, removed lines in red.</div></div>
+    <div class="term-card"><div class="term-name">Remote</div><div class="term-def">The version of your repository hosted online (usually on GitHub). Your local repo "talks to" the remote via push and pull.</div></div>
+    <div class="term-card"><div class="term-name">Origin</div><div class="term-def">The default name for the remote you cloned from. <code>git push origin main</code> pushes to the original source.</div></div>
+    <div class="term-card"><div class="term-name">Fork</div><div class="term-def">Your personal copy of someone else's repository on GitHub. You fork, make changes, then submit a pull request back to the original.</div></div>
+    <div class="term-card"><div class="term-name">Checkout</div><div class="term-def">Switching between branches or restoring files. Boris (Claude Code creator) uses "5-10 separate git checkouts of the same repo" for parallel agents.</div></div>
+    <div class="term-card"><div class="term-name">Worktree</div><div class="term-def">A Git feature that lets you have multiple branches checked out simultaneously in different folders. Used by claude-squad and dmux for parallel AI agents.</div></div>
+    <div class="term-card"><div class="term-name">Stash</div><div class="term-def">Temporarily saving uncommitted changes so you can switch branches. Like putting papers in a drawer before clearing your desk. <code>git stash</code> saves; <code>git stash pop</code> restores.</div></div>
+    <div class="term-card"><div class="term-name">HEAD</div><div class="term-def">A pointer to the commit you are currently working on. Usually points to the latest commit on your current branch.</div></div>
+    <div class="term-card"><div class="term-name">Tag</div><div class="term-def">A named marker on a specific commit, usually used for release versions (e.g., <code>v1.0.0</code>).</div></div>
+    <div class="term-card"><div class="term-name">.gitignore</div><div class="term-def">A file that tells Git which files to NOT track. Used for passwords, large files, or temporary files you do not want in your repo.</div></div>
+    <div class="term-card"><div class="term-name">Git Hooks</div><div class="term-def">Scripts that run automatically before or after Git operations. Can block destructive commands to prevent AI agents from accidentally deleting work.</div></div>
+    <div class="term-card"><div class="term-name">gh (GitHub CLI)</div><div class="term-def">A command-line tool for interacting with GitHub. Create PRs, view issues, manage repos without opening a browser.</div></div>
+  </div>
+</section>
+
+<!-- 5. Package Management -->
+<section class="category cat-pkg" data-category="pkg" id="cat-pkg">
+  <div class="category-header">
+    <div class="category-icon">&#x1F4E6;</div>
+    <h2 class="category-title">Package Management</h2>
+    <span class="category-count"></span>
+  </div>
+  <div class="term-list">
+    <div class="term-card"><div class="term-name">Package</div><div class="term-def">A bundle of code someone else wrote that you can install and use. Like an app from an app store, but for code.</div></div>
+    <div class="term-card"><div class="term-name">Package Manager</div><div class="term-def">A tool that installs, updates, and removes packages. Like an app store for the command line.</div></div>
+    <div class="term-card"><div class="term-name">npm</div><div class="term-def">Node Package Manager. Installs JavaScript/Node.js packages. You'll see <code>npm install</code> in many setup instructions.</div></div>
+    <div class="term-card"><div class="term-name">npx</div><div class="term-def">Runs an npm package without permanently installing it. Useful for one-off commands.</div></div>
+    <div class="term-card"><div class="term-name">pip</div><div class="term-def">Python's package manager. <code>pip install duckdb</code> installs the DuckDB database tool.</div></div>
+    <div class="term-card"><div class="term-name">Homebrew (brew)</div><div class="term-def">The most popular package manager for macOS. <code>brew install ghostty</code> installs the Ghostty terminal.</div></div>
+    <div class="term-card"><div class="term-name">apt</div><div class="term-def">The package manager on Ubuntu/Debian Linux. <code>apt install nginx</code> installs the Nginx web server. Your VPS likely uses this.</div></div>
+    <div class="term-card"><div class="term-name">Dependency</div><div class="term-def">A package your project needs to work. If tool A requires tool B, B is a dependency of A.</div></div>
+    <div class="term-card"><div class="term-name">node_modules</div><div class="term-def">The folder where npm stores downloaded packages. Can get very large. Never commit it to Git.</div></div>
+    <div class="term-card"><div class="term-name">package.json</div><div class="term-def">A file listing all npm dependencies for a project. Like a shopping list of required packages.</div></div>
+    <div class="term-card"><div class="term-name">package-lock.json</div><div class="term-def">Auto-generated file recording the exact version of every package installed. Ensures everyone gets identical packages.</div></div>
+    <div class="term-card"><div class="term-name">Semver</div><div class="term-def">Semantic Versioning. A numbering scheme (e.g., <code>2.1.3</code>) where first = breaking changes, second = new features, third = bug fixes.</div></div>
+    <div class="term-card"><div class="term-name">Registry</div><div class="term-def">The online catalog where packages are stored. npmjs.com for npm, PyPI for Python.</div></div>
+    <div class="term-card"><div class="term-name">Virtual Environment (venv)</div><div class="term-def">A Python feature creating an isolated space for a project's packages, so different projects don't interfere with each other.</div></div>
+  </div>
+</section>
+
+<!-- 6. AI / LLM Developer Terms -->
+<section class="category cat-ai" data-category="ai" id="cat-ai">
+  <div class="category-header">
+    <div class="category-icon">&#x1F916;</div>
+    <h2 class="category-title">AI / LLM Developer Terms</h2>
+    <span class="category-count"></span>
+  </div>
+  <div class="term-list">
+    <div class="term-card"><div class="term-name">LLM</div><div class="term-def">Large Language Model. The AI technology behind Claude, ChatGPT, Gemini. Trained on vast amounts of text to understand and generate language.</div></div>
+    <div class="term-card"><div class="term-name">Token</div><div class="term-def">The unit LLMs use to process text. Roughly 3/4 of a word. "Scrum Master" is about 3 tokens. Pricing and limits are measured in tokens.</div></div>
+    <div class="term-card"><div class="term-name">Context Window</div><div class="term-def">The total amount of text an LLM can "see" at once. Claude's context window is up to 200K tokens (about 500 pages). Your input plus its output combined.</div></div>
+    <div class="term-card"><div class="term-name">Prompt</div><div class="term-def">The instruction you give to an AI. In Claude Code, everything you type is a prompt. Good prompting = good results.</div></div>
+    <div class="term-card"><div class="term-name">System Prompt</div><div class="term-def">Hidden instructions given to the AI before your conversation starts. Defines personality, rules, and behavior. <code>CLAUDE.md</code> acts like a system prompt for Claude Code.</div></div>
+    <div class="term-card"><div class="term-name">Context Engineering</div><div class="term-def">Designing systems that give AI the right information at the right time. Not just prompting, but architecting how context flows through your tools.</div></div>
+    <div class="term-card"><div class="term-name">Agent</div><div class="term-def">An AI that can take actions (run commands, edit files, search the web) rather than just generate text. Claude Code operates as an agent.</div></div>
+    <div class="term-card"><div class="term-name">Agentic Workflow</div><div class="term-def">A process where an AI agent performs multiple steps independently: reading files, running commands, making decisions, and producing results.</div></div>
+    <div class="term-card"><div class="term-name">Agent Swarm / Multi-Agent</div><div class="term-def">Running multiple AI agents simultaneously on different tasks. Example: "Codex creates the plan, Claude Code builds, Codex reviews work."</div></div>
+    <div class="term-card"><div class="term-name">MCP</div><div class="term-def">Model Context Protocol. An open standard that lets AI assistants connect to external tools and data sources. Like USB ports for AI &mdash; plug in Gmail, Notion, Supabase, etc.</div></div>
+    <div class="term-card"><div class="term-name">MCP Server</div><div class="term-def">A small program that exposes a specific tool or data source to AI via the MCP protocol. The Notion MCP server lets Claude read/write Notion pages.</div></div>
+    <div class="term-card"><div class="term-name">MCP Client</div><div class="term-def">The AI application (like Claude Code or Claude Desktop) that connects to MCP servers to use their tools.</div></div>
+    <div class="term-card"><div class="term-name">Tool Use / Function Calling</div><div class="term-def">The ability of an AI to invoke external tools (search the web, read files, run code) as part of generating a response.</div></div>
+    <div class="term-card"><div class="term-name">Skill</div><div class="term-def">A reusable instruction set for Claude Code. Like a saved workflow you can trigger with a slash command. Example: <code>/plan</code>, <code>/review</code>, <code>/morning</code>.</div></div>
+    <div class="term-card"><div class="term-name">Hook</div><div class="term-def">Code that runs automatically when certain events happen in Claude Code. Pre-tool hooks can block dangerous operations. Post-tool hooks can log actions.</div></div>
+    <div class="term-card"><div class="term-name">CLAUDE.md</div><div class="term-def">The configuration file that tells Claude Code about your project, preferences, and rules. The brain's instruction manual.</div></div>
+    <div class="term-card"><div class="term-name">RAG</div><div class="term-def">Retrieval-Augmented Generation. The AI searches your documents first, then uses the results to answer &mdash; grounding responses in your actual data.</div></div>
+    <div class="term-card"><div class="term-name">Embedding</div><div class="term-def">Converting text into numbers (vectors) that capture meaning. "dog" and "puppy" have similar embeddings. Powers semantic search in tools like LanceDB.</div></div>
+    <div class="term-card"><div class="term-name">Vector Database</div><div class="term-def">A specialized database that stores embeddings and can quickly find the most similar items. Used to give AI systems long-term memory.</div></div>
+    <div class="term-card"><div class="term-name">Hallucination</div><div class="term-def">When an AI generates confident-sounding information that is factually incorrect. Always verify critical facts.</div></div>
+    <div class="term-card"><div class="term-name">Grounding</div><div class="term-def">Techniques to connect AI responses to real data (documents, databases, search results) to reduce hallucinations.</div></div>
+    <div class="term-card"><div class="term-name">Guardrails</div><div class="term-def">Rules and constraints placed on an AI system to keep its behavior safe, accurate, and on-topic.</div></div>
+    <div class="term-card"><div class="term-name">Temperature</div><div class="term-def">A setting controlling how creative/random AI responses are. Low = more predictable and focused. High = more varied and creative.</div></div>
+    <div class="term-card"><div class="term-name">Inference</div><div class="term-def">The process of the AI generating a response to your prompt. When Claude is "thinking," it is performing inference.</div></div>
+    <div class="term-card"><div class="term-name">Fine-tuning</div><div class="term-def">Training a pre-existing AI model on your specific data to specialize it. Claude Code's context engineering achieves similar results without fine-tuning.</div></div>
+    <div class="term-card"><div class="term-name">Multimodal</div><div class="term-def">An AI that can process multiple types of input &mdash; text, images, PDFs, code &mdash; not just text. Claude is multimodal.</div></div>
+    <div class="term-card"><div class="term-name">Streaming</div><div class="term-def">When AI output appears word-by-word in real time instead of all at once. The typing effect you see in Claude Code.</div></div>
+    <div class="term-card"><div class="term-name">Model ID</div><div class="term-def">The specific identifier for an AI model version, like <code>claude-opus-4-6</code>. Different IDs = different capabilities and costs.</div></div>
+    <div class="term-card"><div class="term-name">Knowledge Cutoff</div><div class="term-def">The date up to which an AI was trained. It may not know about events after this date unless it can search the web.</div></div>
+    <div class="term-card"><div class="term-name">API</div><div class="term-def">Application Programming Interface. A structured way for programs to communicate. When Claude Code calls GitHub, it's sending structured requests to GitHub's API.</div></div>
+    <div class="term-card"><div class="term-name">API Key</div><div class="term-def">A secret password that identifies you when calling an API. Never put these in code files &mdash; use environment variables or keychains.</div></div>
+    <div class="term-card"><div class="term-name">OAuth</div><div class="term-def">A standard for letting applications access your accounts (Google, Microsoft) without sharing your password. Used by MCP servers to connect to services.</div></div>
+    <div class="term-card"><div class="term-name">Prompt Injection</div><div class="term-def">A security attack where malicious text tricks an AI into ignoring its instructions. A key concern for MCP-connected systems.</div></div>
+    <div class="term-card"><div class="term-name">Token Budget</div><div class="term-def">The amount of context window space available for a conversation. MCPs, skills, and CLAUDE.md all consume tokens. Tip: fewer MCPs = more room for actual work.</div></div>
+    <div class="term-card"><div class="term-name">Compact / /compact</div><div class="term-def">A Claude Code command that summarizes the current conversation to free up context window space. Use when sessions get long.</div></div>
+  </div>
+</section>
+
+<!-- 7. CLI Commands & Concepts -->
+<section class="category cat-cli" data-category="cli" id="cat-cli">
+  <div class="category-header">
+    <div class="category-icon">&#x2328;</div>
+    <h2 class="category-title">CLI Commands & Concepts</h2>
+    <span class="category-count"></span>
+  </div>
+  <div class="term-list">
+    <div class="term-card"><div class="term-name">cd</div><div class="term-def">Change Directory. Navigate to a different folder. <code>cd ~/Documents</code> goes to Documents. <code>cd ..</code> moves up one level.</div></div>
+    <div class="term-card"><div class="term-name">ls</div><div class="term-def">Lists files and folders. <code>ls -la</code> shows all files including hidden ones with details.</div></div>
+    <div class="term-card"><div class="term-name">cat</div><div class="term-def">Displays the contents of a file. <code>cat README.md</code> prints the file to screen. Short for "concatenate."</div></div>
+    <div class="term-card"><div class="term-name">grep</div><div class="term-def">Search for text patterns inside files. <code>grep "MCP" CLAUDE.md</code> finds all lines mentioning "MCP."</div></div>
+    <div class="term-card"><div class="term-name">curl</div><div class="term-def">Make web requests from the terminal. Used to test APIs. <code>curl https://api.example.com</code> fetches data from a URL.</div></div>
+    <div class="term-card"><div class="term-name">wget</div><div class="term-def">Download files from the web. <code>wget https://example.com/file.zip</code> saves a file to your current folder.</div></div>
+    <div class="term-card"><div class="term-name">mkdir</div><div class="term-def">Make directory. <code>mkdir new-project</code> creates a new folder.</div></div>
+    <div class="term-card"><div class="term-name">rm</div><div class="term-def">Remove (delete) files. <code>rm file.txt</code> deletes a file. <code>rm -rf folder/</code> deletes a folder. Be careful &mdash; no recycle bin.</div></div>
+    <div class="term-card"><div class="term-name">cp / mv</div><div class="term-def">Copy and move files. <code>cp file.txt backup.txt</code> copies; <code>mv file.txt new-name.txt</code> renames.</div></div>
+    <div class="term-card"><div class="term-name">touch</div><div class="term-def">Creates an empty file or updates a file's timestamp. <code>touch notes.txt</code> creates a new empty file.</div></div>
+    <div class="term-card"><div class="term-name">echo</div><div class="term-def">Prints text to the screen. <code>echo "Hello"</code> displays "Hello." Also used to check variables: <code>echo $PATH</code>.</div></div>
+    <div class="term-card"><div class="term-name">which</div><div class="term-def">Shows where a command lives on your system. <code>which node</code> tells you the path to the Node.js executable.</div></div>
+    <div class="term-card"><div class="term-name">tail</div><div class="term-def">Shows the last lines of a file. <code>tail -f log.txt</code> follows a log file in real time &mdash; very useful for debugging.</div></div>
+    <div class="term-card"><div class="term-name">pwd</div><div class="term-def">Print Working Directory. Shows the full path of the folder you're in.</div></div>
+    <div class="term-card"><div class="term-name">Pipe ( | )</div><div class="term-def">Sends the output of one command as input to another. <code>cat file.txt | grep "error"</code> reads a file then searches for "error."</div></div>
+    <div class="term-card"><div class="term-name">Redirect ( &gt; , &gt;&gt; )</div><div class="term-def">Sends command output to a file. <code>&gt;</code> overwrites; <code>&gt;&gt;</code> appends. Example: <code>echo "hello" &gt; file.txt</code></div></div>
+    <div class="term-card"><div class="term-name">Environment Variable</div><div class="term-def">A named value stored in the shell's memory. Used for configuration and secrets. <code>API_KEY=abc123</code> sets one. Access with <code>$API_KEY</code>.</div></div>
+    <div class="term-card"><div class="term-name">PATH</div><div class="term-def">A special environment variable listing directories where the shell looks for commands. If "command not found" &mdash; it's probably not in your PATH.</div></div>
+    <div class="term-card"><div class="term-name">Dotfiles</div><div class="term-def">Configuration files starting with a dot (<code>.bashrc</code>, <code>.gitconfig</code>). Hidden by default. They customize how your tools behave.</div></div>
+    <div class="term-card"><div class="term-name">.bashrc / .zshrc</div><div class="term-def">The startup config file for Bash or Zsh. Runs every time you open a terminal. Used for aliases, PATH, and environment variables.</div></div>
+    <div class="term-card"><div class="term-name">.env</div><div class="term-def">A file containing environment variables for a project (API keys, database URLs). Should never be committed to git.</div></div>
+    <div class="term-card"><div class="term-name">sudo</div><div class="term-def">"Super User DO." Runs a command with administrator privileges. Use with caution &mdash; it can modify system files.</div></div>
+    <div class="term-card"><div class="term-name">chmod</div><div class="term-def">Change Mode. Sets file permissions. <code>chmod +x script.sh</code> makes a script executable.</div></div>
+    <div class="term-card"><div class="term-name">Process</div><div class="term-def">A running instance of a program. Each command creates a process. <code>ps</code> lists them; <code>kill</code> stops them.</div></div>
+    <div class="term-card"><div class="term-name">Background Process ( &amp; )</div><div class="term-def">Adding <code>&amp;</code> at the end of a command runs it in the background so you can keep using the terminal.</div></div>
+    <div class="term-card"><div class="term-name">Ctrl+C</div><div class="term-def">Keyboard shortcut to stop (kill) a running command. Your go-to "make it stop" key combination.</div></div>
+    <div class="term-card"><div class="term-name">Ctrl+D</div><div class="term-def">Signals "end of input." Closes interactive sessions and logs you out of SSH.</div></div>
+    <div class="term-card"><div class="term-name">Ctrl+Z</div><div class="term-def">Pauses (suspends) a running command. Use <code>fg</code> to resume in foreground or <code>bg</code> to resume in background.</div></div>
+    <div class="term-card"><div class="term-name">Wildcard ( * )</div><div class="term-def">A pattern that matches anything. <code>*.md</code> means "all .md files." <code>**/*.md</code> means "all .md files in any subfolder."</div></div>
+    <div class="term-card"><div class="term-name">Home Directory ( ~ )</div><div class="term-def">Your user's personal folder. On Mac: <code>/Users/yourname</code>. The <code>~</code> symbol is a shortcut for it.</div></div>
+    <div class="term-card"><div class="term-name">sqlite3</div><div class="term-def">Command-line tool for SQLite databases. Used to query local databases like the WhatsApp bridge database.</div></div>
+  </div>
+</section>
+
+<!-- 8. DevOps & Automation -->
+<section class="category cat-devops" data-category="devops" id="cat-devops">
+  <div class="category-header">
+    <div class="category-icon">&#x2699;</div>
+    <h2 class="category-title">DevOps & Automation</h2>
+    <span class="category-count"></span>
+  </div>
+  <div class="term-list">
+    <div class="term-card"><div class="term-name">CI/CD</div><div class="term-def">Continuous Integration / Continuous Deployment. Automated pipelines that test code when you push it (CI) and deploy it automatically if tests pass (CD).</div></div>
+    <div class="term-card"><div class="term-name">GitHub Actions</div><div class="term-def">GitHub's built-in CI/CD system. Defined in YAML files in <code>.github/workflows/</code>. Runs tests, builds, and deploys on every push.</div></div>
+    <div class="term-card"><div class="term-name">Workflow</div><div class="term-def">In GitHub Actions, an automated process defined in a YAML file. Triggered by events like pushing code or opening a PR.</div></div>
+    <div class="term-card"><div class="term-name">Webhook</div><div class="term-def">An automatic notification sent from one service to another when something happens. "When a form is submitted, send the data to my API."</div></div>
+    <div class="term-card"><div class="term-name">Cron Job</div><div class="term-def">A scheduled task that runs automatically at set times. Like an alarm clock for commands. "Run my morning briefing at 7 AM every day."</div></div>
+    <div class="term-card"><div class="term-name">n8n</div><div class="term-def">An open-source workflow automation tool. Alternative to Zapier/Make. Connects services together with visual flows.</div></div>
+    <div class="term-card"><div class="term-name">Deploy</div><div class="term-def">Making your code available on a server for users to access. Moving from development to production.</div></div>
+    <div class="term-card"><div class="term-name">Production (prod)</div><div class="term-def">The live environment where real users interact with your application. Handle with care.</div></div>
+    <div class="term-card"><div class="term-name">Staging</div><div class="term-def">A copy of production used for final testing before deploying. Catches issues before real users see them.</div></div>
+    <div class="term-card"><div class="term-name">Vercel</div><div class="term-def">A platform for deploying websites directly from GitHub. Community standard for simple deployments.</div></div>
+    <div class="term-card"><div class="term-name">Railway</div><div class="term-def">A cloud platform for deploying full applications (backend + database). Simple alternative to AWS.</div></div>
+    <div class="term-card"><div class="term-name">Headless</div><div class="term-def">Running software without a visible interface. "Headless Chrome" = a browser in the background. Used for automation and testing.</div></div>
+    <div class="term-card"><div class="term-name">Log</div><div class="term-def">A record of what a program did. When something breaks, check the logs. <code>tail -f app.log</code> watches a log in real-time.</div></div>
+    <div class="term-card"><div class="term-name">Secrets</div><div class="term-def">Sensitive values (API keys, passwords, tokens) that should never appear in code or git. Stored in environment variables or a secrets manager.</div></div>
+    <div class="term-card"><div class="term-name">YAML</div><div class="term-def">"YAML Ain't Markup Language." A human-readable config format. Used in Docker Compose, GitHub Actions, and many config files. Indentation matters.</div></div>
+    <div class="term-card"><div class="term-name">JSON</div><div class="term-def">JavaScript Object Notation. A data format used everywhere &mdash; APIs, config files, MCP settings. Looks like <code>{"key": "value"}</code>.</div></div>
+    <div class="term-card"><div class="term-name">Makefile</div><div class="term-def">A file containing shortcuts for common commands. <code>make build</code> or <code>make deploy</code> can run complex multi-step processes with a single word.</div></div>
+    <div class="term-card"><div class="term-name">Linting</div><div class="term-def">Automatically checking code for style issues, errors, and bad practices. A linter is like a spell-checker for code.</div></div>
+    <div class="term-card"><div class="term-name">Hot Reload</div><div class="term-def">When your application automatically restarts or updates as you save changes. Speeds up development.</div></div>
+    <div class="term-card"><div class="term-name">Healthcheck</div><div class="term-def">An endpoint confirming a service is running correctly. Often a URL like <code>/health</code> that returns "OK." Monitoring systems poll these.</div></div>
+    <div class="term-card"><div class="term-name">Rollback</div><div class="term-def">Reverting a deployment to a previous working version when something goes wrong. Your safety net for bad deploys.</div></div>
+    <div class="term-card"><div class="term-name">Infrastructure as Code (IaC)</div><div class="term-def">Managing servers through config files (Terraform, Docker Compose) rather than clicking dashboards. Reproducible and version-controlled.</div></div>
+    <div class="term-card"><div class="term-name">SSH Tunnel</div><div class="term-def">A secure connection forwarding traffic from your local machine through SSH to a remote server. Access private VPS services safely.</div></div>
+    <div class="term-card"><div class="term-name">Monorepo</div><div class="term-def">A single repository containing multiple projects or services. Your AI Second Brain repo is a monorepo &mdash; memory, config, and workflows in one place.</div></div>
+  </div>
+</section>
+
+<!-- 9. Networking & Security -->
+<section class="category cat-net" data-category="net" id="cat-net">
+  <div class="category-header">
+    <div class="category-icon">&#x1F512;</div>
+    <h2 class="category-title">Networking & Security</h2>
+    <span class="category-count"></span>
+  </div>
+  <div class="term-list">
+    <div class="term-card"><div class="term-name">HTTP / HTTPS</div><div class="term-def">The protocol web browsers use to load pages. HTTPS = encrypted (secure). Always use HTTPS for anything sensitive.</div></div>
+    <div class="term-card"><div class="term-name">REST API</div><div class="term-def">A standard way to build web APIs using HTTP methods: GET = read, POST = create, PUT = update, DELETE = remove.</div></div>
+    <div class="term-card"><div class="term-name">SSL / TLS</div><div class="term-def">The encryption technology behind HTTPS. Ensures nobody can read data traveling between your browser and a server. Let's Encrypt provides free certificates.</div></div>
+    <div class="term-card"><div class="term-name">VPN</div><div class="term-def">Virtual Private Network. Creates a secure tunnel between your device and another network. Tailscale is a modern VPN for connecting your devices.</div></div>
+    <div class="term-card"><div class="term-name">RLS</div><div class="term-def">Row Level Security. A database feature (used in Supabase) that controls which users can see which rows of data.</div></div>
+    <div class="term-card"><div class="term-name">Token (auth)</div><div class="term-def">A temporary password that proves your identity to a service. Different from AI tokens &mdash; auth tokens are for security.</div></div>
+    <div class="term-card"><div class="term-name">OWASP</div><div class="term-def">Open Web Application Security Project. Publishes the "Top 10" list of web security risks. Their LLM Top 10 covers AI-specific threats.</div></div>
+  </div>
+</section>
+
+<!-- 10. Gen AI Circle Community Terms -->
+<section class="category cat-community" data-category="community" id="cat-community">
+  <div class="category-header">
+    <div class="category-icon">&#x1F465;</div>
+    <h2 class="category-title">Gen AI Circle Community</h2>
+    <span class="category-count"></span>
+  </div>
+  <div class="term-list">
+    <div class="term-card"><div class="term-name">Second Brain</div><div class="term-def">Your AI-enhanced knowledge management system built on Claude Code + Git + markdown files. A compounding knowledge repository.</div></div>
+    <div class="term-card"><div class="term-name">claude-squad</div><div class="term-def">A tool for managing multiple AI coding agents in parallel tmux sessions. Each agent gets its own Git worktree. Install via <code>brew install claude-squad</code>.</div></div>
+    <div class="term-card"><div class="term-name">dmux</div><div class="term-def">Similar to claude-squad but supports 12+ different AI agents (Claude, Codex, Gemini, etc.). Press <code>n</code> for new task, <code>m</code> to merge.</div></div>
+    <div class="term-card"><div class="term-name">Boris Pattern</div><div class="term-def">Running 5-10 separate Git checkouts of the same repo to run multiple Claude Code agents in parallel. Named after Boris, creator of Claude Code.</div></div>
+    <div class="term-card"><div class="term-name">OpenClaw</div><div class="term-def">An open-source autonomous AI agent platform. Can run 24/7 on a VPS. The community discovered 341 malicious skills targeting it &mdash; be careful with trust.</div></div>
+    <div class="term-card"><div class="term-name">Superpowers Plugin</div><div class="term-def">A Claude Code plugin with sophisticated planning and execution workflows. Recommended for structured project work.</div></div>
+    <div class="term-card"><div class="term-name">Compound Engineering</div><div class="term-def">A plugin/skill that optimizes how Claude Code plans and executes. Warning: can use 19K tokens just loading up.</div></div>
+    <div class="term-card"><div class="term-name">Sidecar</div><div class="term-def">A unified development workflow shell managing agent sessions, Git worktrees, and conversation history across all your AI tools.</div></div>
+    <div class="term-card"><div class="term-name">COG Pattern</div><div class="term-def">Claude Code + Obsidian + Git. A proven architecture where Claude operates on the same markdown files you browse in Obsidian.</div></div>
+    <div class="term-card"><div class="term-name">Dual-Write Pattern</div><div class="term-def">Saving data in two places simultaneously (e.g., markdown + Supabase) for redundancy and different access patterns.</div></div>
+    <div class="term-card"><div class="term-name">Vibe Coding</div><div class="term-def">Using AI to write code by describing what you want in natural language rather than writing code yourself.</div></div>
+    <div class="term-card"><div class="term-name">YOLO Mode</div><div class="term-def">Running Claude Code with full permissions on your main machine without security precautions. Not recommended &mdash; use containers instead.</div></div>
+    <div class="term-card"><div class="term-name">Context Budget</div><div class="term-def">How much context window is already consumed by MCPs, skills, and system instructions before you start typing. Fewer MCPs = more room for work.</div></div>
+    <div class="term-card"><div class="term-name">mcp-builder</div><div class="term-def">A skill that helps you create your own MCP servers. Used to build custom integrations for services like GoHighLevel.</div></div>
+    <div class="term-card"><div class="term-name">mcpsec</div><div class="term-def">A security scanning tool for MCP servers. Checks for known vulnerabilities in your installed MCPs.</div></div>
+    <div class="term-card"><div class="term-name">Version Pinning</div><div class="term-def">Locking an MCP or package to a specific version so it doesn't auto-update to a potentially broken or compromised version.</div></div>
+    <div class="term-card"><div class="term-name">Remote Control</div><div class="term-def">Official Claude Code feature (Feb 2026) that lets you start a task on your laptop and continue from your phone. Requires Max plan.</div></div>
+  </div>
+</section>
+
+<!-- SYMBOLS TABLE -->
+<section class="category cat-cli" data-category="cli" id="cat-symbols">
+  <div class="category-header">
+    <div class="category-icon">&#x2318;</div>
+    <h2 class="category-title">Quick Reference: Shell Symbols</h2>
+  </div>
+  <table class="symbols-table">
+    <thead>
+      <tr><th>Symbol</th><th>Name</th><th>What It Does</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>$</td><td>Dollar sign</td><td>Indicates a shell prompt (don't type it) or references a variable (<code>$PATH</code>)</td></tr>
+      <tr><td>~</td><td>Tilde</td><td>Shortcut for your home directory</td></tr>
+      <tr><td>/</td><td>Forward slash</td><td>Directory separator in file paths</td></tr>
+      <tr><td>.</td><td>Dot</td><td>Current directory; also makes files hidden</td></tr>
+      <tr><td>..</td><td>Double dot</td><td>Parent directory (one level up)</td></tr>
+      <tr><td>|</td><td>Pipe</td><td>Sends output of one command to another</td></tr>
+      <tr><td>&gt;</td><td>Redirect</td><td>Sends output to a file (overwrites)</td></tr>
+      <tr><td>&gt;&gt;</td><td>Append</td><td>Sends output to a file (adds to end)</td></tr>
+      <tr><td>&amp;</td><td>Ampersand</td><td>Runs a command in the background</td></tr>
+      <tr><td>&amp;&amp;</td><td>Double ampersand</td><td>Runs next command only if previous succeeded</td></tr>
+      <tr><td>#</td><td>Hash</td><td>Starts a comment in shell scripts (ignored by shell)</td></tr>
+      <tr><td>*</td><td>Asterisk</td><td>Matches any characters in file names</td></tr>
+      <tr><td>" "</td><td>Double quotes</td><td>Groups words; allows variable expansion inside</td></tr>
+      <tr><td>' '</td><td>Single quotes</td><td>Groups words; treats everything literally</td></tr>
+    </tbody>
+  </table>
+</section>
+
+</main>
+
+<!-- NO RESULTS -->
+<div class="no-results" id="noResults">
+  <div class="emoji">&#x1F50D;</div>
+  <p>No terms found. Try a different search.</p>
+</div>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <p>Built by <a href="https://www.linkedin.com/in/staspavlov/" target="_blank" rel="noopener">Stas Pavlov</a> &middot; <a href="https://prowareness.academy" target="_blank" rel="noopener">Prowareness Academy</a> &middot; March 2026</p>
+  <p style="margin-top: 8px; font-size: 12px; color: var(--text-muted);">Sources: Gen AI Circle community, Second Brain Crew, Claude Code documentation</p>
+</footer>
+
+<!-- BACK TO TOP -->
+<button class="back-to-top" id="backToTop" aria-label="Back to top">&#x2191;</button>
+
+<script>
+(function() {
+  const searchInput = document.getElementById('searchInput');
+  const searchCount = document.getElementById('searchCount');
+  const chips = document.querySelectorAll('.chip');
+  const categories = document.querySelectorAll('.category');
+  const noResults = document.getElementById('noResults');
+  const backToTop = document.getElementById('backToTop');
+  const content = document.getElementById('glossaryContent');
+
+  // Count terms per category
+  categories.forEach(cat => {
+    const count = cat.querySelectorAll('.term-card').length;
+    const badge = cat.querySelector('.category-count');
+    if (badge) badge.textContent = count + ' terms';
+  });
+
+  // Total count
+  const totalTerms = document.querySelectorAll('.term-card').length;
+  const symbolRows = document.querySelectorAll('.symbols-table tbody tr').length;
+
+  let activeCategory = 'all';
+
+  // Chip clicks
+  chips.forEach(chip => {
+    chip.addEventListener('click', () => {
+      chips.forEach(c => c.classList.remove('active'));
+      chip.classList.add('active');
+      activeCategory = chip.dataset.category;
+      searchInput.value = '';
+      filterTerms();
+    });
+  });
+
+  // Search
+  searchInput.addEventListener('input', () => {
+    chips.forEach(c => c.classList.remove('active'));
+    if (!searchInput.value) {
+      chips[0].classList.add('active');
+      activeCategory = 'all';
+    }
+    filterTerms();
+  });
+
+  function filterTerms() {
+    const query = searchInput.value.toLowerCase().trim();
+    let visibleCount = 0;
+    let visibleCategories = 0;
+
+    categories.forEach(cat => {
+      const catName = cat.dataset.category;
+      const cards = cat.querySelectorAll('.term-card');
+      let catVisible = 0;
+
+      // Handle symbols table separately
+      const isSymbols = cat.id === 'cat-symbols';
+
+      if (isSymbols) {
+        const rows = cat.querySelectorAll('.symbols-table tbody tr');
+        let tableVisible = 0;
+        rows.forEach(row => {
+          const text = row.textContent.toLowerCase();
+          const matchSearch = !query || text.includes(query);
+          const matchCat = activeCategory === 'all' || catName === activeCategory;
+          if (matchSearch && matchCat) {
+            row.style.display = '';
+            tableVisible++;
+          } else {
+            row.style.display = 'none';
+          }
+        });
+        cat.style.display = tableVisible > 0 ? '' : 'none';
+        if (tableVisible > 0) visibleCategories++;
+        visibleCount += tableVisible;
+        return;
+      }
+
+      cards.forEach(card => {
+        const name = card.querySelector('.term-name').textContent.toLowerCase();
+        const def = card.querySelector('.term-def').textContent.toLowerCase();
+        const matchSearch = !query || name.includes(query) || def.includes(query);
+        const matchCat = activeCategory === 'all' || catName === activeCategory;
+
+        if (matchSearch && matchCat) {
+          card.style.display = '';
+          card.classList.toggle('highlight', query && name.includes(query));
+          catVisible++;
+          visibleCount++;
+        } else {
+          card.style.display = 'none';
+          card.classList.remove('highlight');
+        }
+      });
+
+      cat.style.display = catVisible > 0 ? '' : 'none';
+      if (catVisible > 0) visibleCategories++;
+    });
+
+    noResults.style.display = visibleCount === 0 ? 'block' : 'none';
+    content.style.display = visibleCount === 0 ? 'none' : '';
+
+    if (query) {
+      searchCount.textContent = visibleCount + ' result' + (visibleCount !== 1 ? 's' : '') + ' found';
+    } else {
+      searchCount.textContent = '';
+    }
+  }
+
+  // Back to top
+  window.addEventListener('scroll', () => {
+    backToTop.classList.toggle('visible', window.scrollY > 400);
+  });
+
+  backToTop.addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+
+  // Keyboard shortcut: / focuses search
+  document.addEventListener('keydown', (e) => {
+    if (e.key === '/' && document.activeElement !== searchInput) {
+      e.preventDefault();
+      searchInput.focus();
+    }
+    if (e.key === 'Escape') {
+      searchInput.blur();
+      searchInput.value = '';
+      activeCategory = 'all';
+      chips.forEach(c => c.classList.remove('active'));
+      chips[0].classList.add('active');
+      filterTerms();
+    }
+  });
+})();
+</script>
+
+</body>
+</html>
